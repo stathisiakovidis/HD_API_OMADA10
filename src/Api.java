@@ -1,165 +1,176 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
+import java.awt.Desktop;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import java.io.IOException;
-
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class Api {
 
-	public static void main(String[] args) throws SAXException, ParserConfigurationException {
-		// Εμφανίζουμε το μενού. Το μενού τρέχει μέχρι να δώσουμε 0.
+	public static void main(String[] args) throws SAXException, ParserConfigurationException, URISyntaxException {
+		// Ξ•ΞΌΟ†Ξ±Ξ½Ξ―Ξ¶ΞΏΟ…ΞΌΞµ Ο„ΞΏ ΞΌΞµΞ½ΞΏΟ. Ξ¤ΞΏ ΞΌΞµΞ½ΞΏΟ Ο„ΟΞ­Ο‡ΞµΞΉ ΞΌΞ­Ο‡ΟΞΉ Ξ½Ξ± Ξ΄ΟΟƒΞΏΟ…ΞΌΞµ 0.
 		while (true) {
 			Scanner user_input = new Scanner(System.in);
 
-			System.out.println("######---Επιλογές Menu------------");
-			System.out.println("######---Επιλογή 1--- ΟΝΟΜΑ ΟΡΓΑΝΙΣΜΟΥ ");
-			System.out.println("######---Επιλογή 2----ΚΑΤΗΓΟΡΙΑ ΟΡΓΑΝΙΣΜΟΥ");
-			System.out.println("######---Επιλογή 3----SITE ΟΡΓΑΝΙΣΜΟΥ");
-			System.out.println("######---Επιλογή 4----EMAIL ΟΡΓΑΝΙΣΜΟΥ");
-			System.out.println("######---Επιλογή 5----ΦΟΡΕΑΣ ΟΡΓΑΝΙΣΜΟΥ");
-			System.out.println("######---Έξοδος με 0");
-			System.out.println("######---Δώστε απο το πληκτρολόγιο επιλογή (1-10) και κατόπιν πιέστε Enter.....");
+			System.out.println("------------Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ­Ο‚ Menu------------");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 1--Ξ›Ξ—Ξ¨Ξ— ΞΞ›Ξ©Ξ Ξ¤Ξ©Ξ Ξ Ξ‘ΞΞ•Ξ Ξ—Ξ£Ξ¤Ξ—ΞΞ™Ξ©Ξ Ξ¤Ξ—Ξ£ Ξ•Ξ›Ξ›Ξ‘Ξ”Ξ‘Ξ£ ");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 2--Ξ›Ξ—Ξ¨Ξ— ΞΞ•Ξ£Ξ•Ξ©Ξ Ξ Ξ΅ΞΞ£Ξ©Ξ Ξ™ΞΞΞ¥ Ξ Ξ‘.ΞΞ‘Ξ.");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 3--Ξ›Ξ—Ξ¨Ξ— Ξ Ξ›Ξ—Ξ΅ΞΞ¦ΞΞ΅Ξ™Ξ©Ξ Ξ“Ξ™Ξ‘ Ξ¤Ξ Ξ Ξ‘ΞΞ•Ξ Ξ™Ξ£Ξ¤Ξ—ΞΞ™Ξ");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 4--Ξ›Ξ—Ξ¨Ξ— ΞΞ΅Ξ“Ξ‘ΞΞ©Ξ¤Ξ™ΞΞ©Ξ ΞΞΞΞ‘Ξ”Ξ©Ξ Ξ Ξ‘.ΞΞ‘Ξ.");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 5--Ξ›Ξ—Ξ¨Ξ— Ξ¥Ξ ΞΞ“Ξ΅Ξ‘Ξ¦ΞΞΞ¤Ξ©Ξ Ξ Ξ‘.ΞΞ‘Ξ.");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 6--Ξ›Ξ—Ξ¨Ξ— Ξ Ξ΅Ξ‘ΞΞ•Ξ©Ξ Ξ¤ΞΞ¥ Ξ Ξ‘.ΞΞ‘Ξ. Ξ ΞΞ¥ Ξ•Ξ§ΞΞ¥Ξ Ξ‘ΞΞ‘ΞΞ›Ξ—ΞΞ•Ξ™ Ξ¤Ξ Ξ”Ξ™Ξ‘Ξ£Ξ¤Ξ—ΞΞ‘ 20-01-2018 ΞΞ• 20-01-2019. ");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 7--Ξ›Ξ—Ξ¨Ξ— Ξ Ξ΅Ξ‘ΞΞ•Ξ©Ξ Ξ¤ΞΞ¥ Ξ Ξ‘.ΞΞ‘Ξ. Ξ ΞΞ¥ Ξ•Ξ§ΞΞ¥Ξ Ξ¥Ξ ΞΞ“Ξ•Ξ“Ξ΅Ξ‘Ξ¦Ξ•Ξ™ Ξ‘Ξ Ξ Ξ£Ξ¥Ξ“ΞΞ•ΞΞ΅Ξ™ΞΞ•ΞΞ Ξ¥Ξ ΞΞ“Ξ΅Ξ‘Ξ¦ΞΞΞ¤Ξ‘ (100005406) Ξ¤Ξ Ξ”Ξ™Ξ‘Ξ£Ξ¤Ξ—ΞΞ‘ 20-01-2018 ΞΞ• 20-02-2018 (2Ξ— Ξ£Ξ•Ξ›Ξ™Ξ”Ξ‘) ");
+			System.out.println("--Ξ•Ο€ΞΉΞ»ΞΏΞ³Ξ® 8--Ξ›Ξ—Ξ¨Ξ— Ξ¤Ξ—Ξ£ Ξ Ξ΅Ξ‘ΞΞ—Ξ£ 609Ξ469Ξ’7Ξ™-Ξ‘Ξ‘9 Ξ£Ξ• ΞΞΞ΅Ξ¦Ξ— PDF. ");
+			System.out.println("######---ΞΞΎΞΏΞ΄ΞΏΟ‚ ΞΌΞµ 0");
+			System.out.println("######---Ξ”ΟΟƒΟ„Ξµ Ξ±Ο€ΞΏ Ο„ΞΏ Ο€Ξ»Ξ·ΞΊΟ„ΟΞΏΞ»ΟΞ³ΞΉΞΏ ΞµΟ€ΞΉΞ»ΞΏΞ³Ξ® (1-10) ΞΊΞ±ΞΉ ΞΊΞ±Ο„ΟΟ€ΞΉΞ½ Ο€ΞΉΞ­ΟƒΟ„Ξµ Enter.....");
 
-			// Παίρνουμε την τιμή από τον χρήστη
+			// Ξ Ξ±Ξ―ΟΞ½ΞΏΟ…ΞΌΞµ Ο„Ξ·Ξ½ Ο„ΞΉΞΌΞ® Ξ±Ο€Ο Ο„ΞΏΞ½ Ο‡ΟΞ®ΟƒΟ„Ξ·
 			String selection = user_input.next();
 			int select = Integer.parseInt(selection);
-			if (select==0) break;
+			if (select == 0)
+				break;
 			try {
 				DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 				DocumentBuilder db = dbf.newDocumentBuilder();
-				Document doc = db
-						.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206917.xml").openStream());
+				Document doc = null;
 				switch (select) {
 
 				case 1:
 
 					System.out.println(selection);
 
-					// Δημιουργούμε τα κατάλληλα αντικείμενα για να διαχειριστούμε την απάντηση από
-					// το A
-
+					// Ξ”Ξ·ΞΌΞΉΞΏΟ…ΟΞ³ΞΏΟΞΌΞµ Ο„Ξ± ΞΊΞ±Ο„Ξ¬Ξ»Ξ»Ξ·Ξ»Ξ± Ξ±Ξ½Ο„ΞΉΞΊΞµΞ―ΞΌΞµΞ½Ξ± Ξ³ΞΉΞ± Ξ½Ξ± Ξ΄ΞΉΞ±Ο‡ΞµΞΉΟΞΉΟƒΟ„ΞΏΟΞΌΞµ Ο„Ξ·Ξ½ Ξ±Ο€Ξ¬Ξ½Ο„Ξ·ΟƒΞ· Ξ±Ο€Ο
+					// Ο„ΞΏ A
+					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations.xml?category=UNIVERSITY")
+							.openStream());
 					NodeList myinfo = doc.getElementsByTagName("label");
 					Node mynode = null;
+					System.out.println("Ξ¤Ξ± Ο€Ξ±Ξ½ΞµΟ€ΞΉΟƒΟ„Ξ®ΞΌΞΉΞ± Ο„Ξ·Ο‚ Ξ•Ξ»Ξ»Ξ¬Ξ΄Ξ±Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ:");
 					for (int j = 0; j < myinfo.getLength(); j++) {
+						System.out.print(j + 1 + ") ");
 						mynode = myinfo.item(j);
-						System.out.print("To όνομα του οργανισμού είναι: ");
 						System.out.println(mynode.getTextContent());
-						System.out.println("-------------------------------------\n");
 					}
 					break;
 
 				case 2:
-					myinfo = doc.getElementsByTagName("category");
+					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206919/positions.xml")
+							.openStream());
+					myinfo = doc.getElementsByTagName("label");
 					mynode = null;
+					System.out.println("ΞΞΉ ΞΈΞ­ΟƒΞµΞΉΟ‚ Ο„ΞΏΟ… Ξ΄ΞΉΞΏΞΉΞΊΞ·Ο„ΞΉΞΊΞΏΟ Ο€ΟΞΏΟƒΟ‰Ο€ΞΉΞΊΞΏΟ Ο„ΞΏΟ… Ξ Ξ±Ξ½ΞµΟ€ΞΉΟƒΟ„Ξ·ΞΌΞ―ΞΏΟ… ΞΞ±ΞΊΞµΞ΄ΞΏΞ½Ξ―Ξ±Ο‚ ΞµΞ―Ξ½Ξ±ΞΉ:");
 					for (int j = 0; j < myinfo.getLength(); j++) {
+						System.out.print(j + 1 + ") ");
 						mynode = myinfo.item(j);
-						System.out.print("Η κατηγορία του οργανισμού είναι: ");
 						System.out.println(mynode.getTextContent());
-						System.out.println("-------------------------------------\n");
 					}
 
 					break;
 				case 3:
-					myinfo = doc.getElementsByTagName("website");
+					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206919.xml").openStream());
+					myinfo = doc.getElementsByTagName("label");
+					NodeList myinfo1 = doc.getElementsByTagName("website");
+					NodeList myinfo2 = doc.getElementsByTagName("odeManagerEmail");
 					mynode = null;
 					for (int j = 0; j < myinfo.getLength(); j++) {
 						mynode = myinfo.item(j);
-						System.out.print("To website του οργανισμού είναι: ");
+						System.out.println("Ξ Ξ»Ξ·ΟΞΏΟ†ΞΏΟΞ―ΞµΟ‚ Ο„ΞΏΟ… Ξ Ξ±Ξ½ΞµΟ€ΞΉΟƒΟ„Ξ·ΞΌΞ―ΞΏΟ…: ");
+						System.out.print("ΞΞ½ΞΏΞΌΞ±: ");
 						System.out.println(mynode.getTextContent());
-						System.out.println("-------------------------------------\n");
+						mynode = myinfo1.item(j);
+						System.out.print("Website: ");
+						System.out.println(mynode.getTextContent());
+						mynode = myinfo2.item(j);
+						System.out.print("Email: ");
+						System.out.println(mynode.getTextContent());
+						System.out.println("------------------------------------------\n");
 					}
 					break;
 				case 4:
-					myinfo = doc.getElementsByTagName("odeManagerEmail");
+					doc = db.parse(new URL(
+							"https://diavgeia.gov.gr/opendata/organizations/99206919/units.xml?descendants=children")
+									.openStream());
+					myinfo = doc.getElementsByTagName("label");
+					myinfo1 = doc.getElementsByTagName("category");
 					mynode = null;
+					System.out.println("ΞΞΉ ΞΏΟΞ³Ξ±Ξ½Ο‰Ο„ΞΉΞΊΞΏΞ― Ο†ΞΏΟΞµΞ―Ο‚ Ο„ΞΏΟ… Ξ Ξ‘.ΞΞ‘Ξ. ΞµΞ―Ξ½Ξ±ΞΉ: ");
 					for (int j = 0; j < myinfo.getLength(); j++) {
 						mynode = myinfo.item(j);
-						System.out.print("To email του οργανισμού είναι: ");
+						System.out.print("ΞΞ½ΞΏΞΌΞ±: ");
 						System.out.println(mynode.getTextContent());
-						System.out.println("-------------------------------------\n");
+						mynode = myinfo1.item(j);
+						System.out.print("ΞΞ±Ο„Ξ·Ξ³ΞΏΟΞ―Ξ±: ");
+						System.out.println(mynode.getTextContent());
+						System.out.println("------------------------------------------\n");
 					}
 					break;
 				case 5:
-					myinfo = doc.getElementsByTagName("supervisorLabel");
+					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206919/signers.xml")
+							.openStream());
+					myinfo = doc.getElementsByTagName("firstName");
+					myinfo1 = doc.getElementsByTagName("lastName");
+					System.out.println("ΞΞΉ Ο…Ο€ΞΏΞ³ΟΞ¬Ο†ΞΏΞ½Ο„ΞµΟ‚ Ο„ΞΏΟ… Ξ Ξ‘.ΞΞ‘Ξ ΞµΞ―Ξ½Ξ±ΞΉ:");
 					mynode = null;
 					for (int j = 0; j < myinfo.getLength(); j++) {
 						mynode = myinfo.item(j);
-						System.out.print("O φορέας του οργανισμού είναι: ");
+						System.out.print("ΞΞ½ΞΏΞΌΞ±: ");
 						System.out.println(mynode.getTextContent());
-						System.out.println("-------------------------------------\n");
+						mynode = myinfo1.item(j);
+						System.out.print("Ξ•Ο€ΟΞ½Ο…ΞΌΞΏ: ");
+						System.out.println(mynode.getTextContent());
+						System.out.println("------------------------------------------\n");
 					}
 					break;
 				case 6:
-					doc= db
-					.parse(new URL("https://diavgeia.gov.gr/opendata/search?org=99206917").openStream());
-
-					
-
-					/*
-					 * //Μετατρέπουμε το κείμενο σε Double, στρογγυλοποιώ το αποτέλεσμα σε ακέραιο
-					 * αριθμό προς τα επάνω. double pages =
-					 * Double.parseDouble(mynode.getTextContent()) / 100; int f_pages = (int)
-					 * Math.ceil(pages);
-					 * System.out.println("Αριθμός Σελίδων αποτελέσματος: "+f_pages);
-					 * 
-					 * String selection_pages = "1";
-					 * 
-					 * 
-					 * int total_number = 0;
-					 * 
-					 * for(int y=0; y < f_pages ; y++ ) {
-					 * 
-					 * //Ζητάμε από τον χρήστη να δώσει 1 για να πάρει τα επόμενα 100 αποτελέσματα
-					 * System.out.
-					 * println("######--- Πατήστε το 1 και Enter για να εμφανιστούν τα 100 επόμενα αποτελέσματα | Πατήστε x και Enter για τερματισμό ------"
-					 * ); Scanner user_input2 = new Scanner(System.in); //Παίρνουμε την τιμή από τον
-					 * χρήστη selection_pages = user_input2.next(); if(selection_pages.equals("1"))
-					 * {
-					 * 
-					 * //Δημιουργούμε τα κατάλληλα αντικείμενα για να διαχειριστούμε την απάντηση
-					 * από το API //Χρησιμοποιούμε την μεταβλητή page για να πάρουμε την σελίδα που
-					 * θέλουμε DocumentBuilderFactory dbf2 = DocumentBuilderFactory.newInstance();
-					 * DocumentBuilder db2 = dbf2.newDocumentBuilder(); Document doc2 =
-					 * db2.parse(new URL(
-					 * "https://diavgeia.gov.gr/opendata/search.xml?org=99206919&from_date=2018-03-11&page="
-					 * +y).openStream());
-					 * 
-					 * //Επιλέγουμε το XML tag που μας ενδιαφέρει. Δημιουργούμε μια λίστα από Nodes.
-					 * //Κάθε Node έχει και το περιεχόμενο του tag για κάθε απόφαση. NodeList n1 =
-					 * doc2.getElementsByTagName("subject");
-					 * 
-					 * //Παίρνουμε ένα-ένα τα Nodes και προβάλουμε το περιεχόμενο τους. for(int n =0
-					 * ; n < n1.getLength(); n++) { Node mynoded = n1.item(n);
-					 * System.out.println("--- No: "+total_number+" ");
-					 * System.out.println(mynoded.getTextContent());
-					 * System.out.println("-------------------------------------"); total_number++;
-					 * }//FOR }//IF else if(selection_pages.equals("x")) { break; }
-					 * 
-					 * 
-					 * }//FOR
-					 */
-
+					doc = db.parse(new URL(
+							"https://diavgeia.gov.gr/opendata/search.xml?org=99206919&from_date=2018-01-20&to_date=2019-01-20&status=revoked")
+									.openStream());
+					myinfo = doc.getElementsByTagName("subject");
+					mynode = null;
+					System.out.println("ΞΞ­ΞΌΞ±Ο„ΞΏΞ»ΞΏΞ³Ξ―Ξ± ΟΞ»Ο‰Ξ½ Ο„Ο‰Ξ½ Ο€ΟΞ¬ΞΎΞµΟ‰Ξ½ Ο„ΞΏΟ… Ξ Ξ‘.ΞΞ‘Ξ. Ο€ΞΏΟ… Ξ­Ο‡ΞΏΟ…Ξ½ Ξ±Ξ½Ξ±ΞΊΞ»Ξ·ΞΈΞµΞ―: ");
+					for (int j = 0; j < myinfo.getLength(); j++) {
+						System.out.println("No" + (j + 1) + ":");
+						mynode = myinfo.item(j);
+						System.out.println(mynode.getTextContent());
+						System.out.println("------------------------------------------\n");
+					}
+				case 7:
+					doc = db.parse(new URL(
+							"https://diavgeia.gov.gr/opendata/search.xml?org=99206919&from_date=2018-01-20&to_date=2018-02-20&signer=100005406&page=2")
+									.openStream());
+					myinfo = doc.getElementsByTagName("subject");
+					mynode = null;
+					System.out.println("2Ξ· ΟƒΞµΞ»Ξ―Ξ΄Ξ± ΞΌΞµ Ο€ΟΞ¬ΞΎΞµΞΉΟ‚ Ο€ΞΏΟ… Ξ­Ο‡ΞΏΟ…Ξ½ Ο…Ο€ΞΏΞ³ΞµΞ³ΟΞ±Ο†ΞµΞ― Ξ±Ο€Ο Ο„ΞΏΞ½ Ο…Ο€ΞΏΞ³ΟΞ±Ο†Ξ­Ξ± ΞΌΞµ id=100005406: ");
+					for (int j = 0; j < myinfo.getLength(); j++) {
+						System.out.println("No" + (j + 1) + ":");
+						mynode = myinfo.item(j);
+						System.out.println(mynode.getTextContent());
+						System.out.println("------------------------------------------\n");
+					}
+				case 8:
+					doc = db.parse(new URL(
+							"https://diavgeia.gov.gr/opendata/search.xml?org=99206919&ada=609Ξ469Ξ’7Ξ™-Ξ‘Ξ‘9")
+									.openStream());
+					myinfo = doc.getElementsByTagName("documentUrl");
+					mynode = null;
+					System.out.println("Ξ‘Ξ½Ξ±ΞΊΞ±Ο„ΞµΟΞΈΟ…Ξ½ΟƒΞ· ΟƒΟ„ΞΏΞ½ ΟƒΟΞ½Ξ΄ΞµΟƒΞΌΞΏ Ξ»Ξ®ΟΞ·Ο‚ Ο„Ξ·Ο‚ Ο€ΟΞ¬ΞΎΞ·Ο‚ 609Ξ469Ξ’7Ξ™-Ξ‘Ξ‘9:");
+					for (int j = 0; j < myinfo.getLength(); j++) {
+						mynode = myinfo.item(j);
+						System.out.println(mynode.getTextContent()+"\n");
+						if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+						    Desktop.getDesktop().browse(new URI(mynode.getTextContent()));
+						}
+					}
 				}
 			} catch (MalformedURLException e) {
 
@@ -171,6 +182,5 @@ public class Api {
 
 			}
 		}
-	} // Τέλος του Μενού While
-
+	} // Ξ¤Ξ­Ξ»ΞΏΟ‚ Ο„ΞΏΟ… ΞΞµΞ½ΞΏΟ While
 }
