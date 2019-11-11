@@ -18,14 +18,14 @@ import org.xml.sax.SAXException;
 public class Api {
 
 	public static void main(String[] args) throws SAXException, ParserConfigurationException, URISyntaxException {
-		// Εμφανίζουμε το μενού. Το μενού τρέχει μέχρι να δώσουμε 0.
+		// Εμφανίζουμε το μενού. Το μενού τρέχει μέχρι να δώσει ο χρήστης την τιμή 0.
 		while (true) {
 			Scanner user_input = new Scanner(System.in);
-
+			// Οι επιλογές του μενού είναι οι εξής 10.
 			System.out.println("------------Επιλογές Menu------------");
 			System.out.println("--Επιλογή 1--ΛΗΨΗ ΟΛΩΝ ΤΩΝ ΠΑΝΕΠΗΣΤΗΜΙΩΝ ΤΗΣ ΕΛΛΑΔΑΣ ");
 			System.out.println("--Επιλογή 2--ΛΗΨΗ ΤΩΝ ΘΕΣΕΩΝ ΠΡΟΣΩΠΙΚΟΥ ΤΟΥ ΠΑ.ΜΑΚ.");
-			System.out.println("--Επιλογή 3--ΛΗΨΗ ΒΑΣΙΚΩΝ ΠΛΗΡΟΦΟΡΙΩΝ ΓΙΑ ΤΟ ΠΑ.ΜΑΚ.");
+			System.out.println("--Επιλογή 3--ΛΗΨΗ ΤΩΝ ΒΑΣΙΚΩΝ ΠΛΗΡΟΦΟΡΙΩΝ ΤΟΥ ΠΑ.ΜΑΚ.");
 			System.out.println("--Επιλογή 4--ΛΗΨΗ ΤΩΝ ΟΡΓΑΝΩΤΙΚΩΝ ΜΟΝΑΔΩΝ ΤΟΥ ΠΑ.ΜΑΚ.");
 			System.out.println("--Επιλογή 5--ΛΗΨΗ ΤΩΝ ΥΠΟΓΡΑΦΟΝΤΩΝ ΤΟΥ ΠΑ.ΜΑΚ.");
 			System.out.println(
@@ -34,13 +34,15 @@ public class Api {
 					"--Επιλογή 7--ΛΗΨΗ ΤΩΝ ΠΡΑΞΕΩΝ ΤΟΥ ΠΑ.ΜΑΚ. ΠΟΥ ΕΧΟΥΝ ΥΠΟΓΕΓΡΑΦΕΙ ΑΠΟ ΣΥΓΚΕΚΡΙΜΕΝΟ ΥΠΟΓΡΑΦΟΝΤΑ (100005406) ΤΟ ΔΙΑΣΤΗΜΑ 20-01-2018 ΜΕ 20-02-2018 (2Η ΣΕΛΙΔΑ) ");
 			System.out.println("--Επιλογή 8--ΛΗΨΗ ΤΗΣ ΠΡΑΞΗΣ 609Ν469Β7Ι-ΑΑ9 ΣΕ ΜΟΡΦΗ PDF. ");
 			System.out.println("--Επιλογή 9--ΛΗΨΗ ΤΩΝ 50 ΠΡΩΤΩΝ ΧΡΗΜΑΤΙΚΩΝ ΕΝΤΑΛΜΑΤΩΝ ΤΟΥ ΟΡΓΑΝΙΣΜΟΥ ΠΟΥ ΕΠΙΘΥΜΕΙΤΕ. ");
-			System.out.println("--Επιλογή 10--ΛΗΨΗ ΤΩΝ 10 ΜΕ ΣΕΙΡΑ ΣΧΕΤΙΚΟΤΗΤΑΣ ΠΡΑΞΕΩΝ ΤΥΠΟΥ Β.1.3 ΤΟΥ ΟΡΓΑΝΙΣΜΟΥ ΠΟΥ ΕΠΙΘΥΜΕΙΤΕ, ΤΟ ΔΙΑΣΤΗΜΑ 20-01-2018 ΜΕ 20-02-2018. ");
+			System.out.println(
+					"--Επιλογή 10--ΛΗΨΗ ΤΩΝ 10 ΜΕ ΣΕΙΡΑ ΣΧΕΤΙΚΟΤΗΤΑΣ ΠΡΑΞΕΩΝ ΤΥΠΟΥ Β.1.3 ΤΟΥ ΟΡΓΑΝΙΣΜΟΥ ΠΟΥ ΕΠΙΘΥΜΕΙΤΕ, ΤΟ ΔΙΑΣΤΗΜΑ 20-01-2018 ΜΕ 20-02-2018. ");
 			System.out.println("--Έξοδος με 0--");
 			System.out.println("######-Δώστε απο το πληκτρολόγιο επιλογή (1-10) και κατόπιν πιέστε Enter.....");
 
-			// Παίρνουμε την τιμή από τον χρήστη
+			// Παίρνουμε την τιμή από τον χρήστη.
 			String selection = user_input.next();
 			int select = Integer.parseInt(selection);
+			// Στην περίπτωση 0 το πρόγραμμα τερματίζει.
 			if (select == 0)
 				break;
 			try {
@@ -49,6 +51,7 @@ public class Api {
 				Document doc = null;
 				switch (select) {
 
+				// Επιλογή 1
 				case 1:
 					System.out.println(selection);
 					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations.xml?category=UNIVERSITY")
@@ -63,6 +66,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 2
 				case 2:
 					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206919/positions.xml")
 							.openStream());
@@ -76,7 +80,8 @@ public class Api {
 					}
 
 					break;
-					
+
+				// Επιλογή 3
 				case 3:
 					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206919.xml").openStream());
 					myinfo = doc.getElementsByTagName("label");
@@ -98,6 +103,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 4
 				case 4:
 					doc = db.parse(new URL(
 							"https://diavgeia.gov.gr/opendata/organizations/99206919/units.xml?descendants=children")
@@ -117,6 +123,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 5
 				case 5:
 					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/organizations/99206919/signers.xml")
 							.openStream());
@@ -135,6 +142,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 6
 				case 6:
 					doc = db.parse(new URL(
 							"https://diavgeia.gov.gr/opendata/search.xml?org=99206919&from_date=2018-01-20&to_date=2019-01-20&status=revoked&size=5")
@@ -150,6 +158,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 7
 				case 7:
 					doc = db.parse(new URL(
 							"https://diavgeia.gov.gr/opendata/search.xml?org=99206919&from_date=2018-01-20&to_date=2018-02-20&signer=100005406&page=2")
@@ -166,6 +175,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 8
 				case 8:
 					doc = db.parse(
 							new URL("https://diavgeia.gov.gr/opendata/search.xml?org=99206919&ada=609Ν469Β7Ι-ΑΑ9")
@@ -182,6 +192,7 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 9
 				case 9:
 					System.out.println(
 							"Παρακαλώ δώστε τον οργανισμό για τον οποίο θέλετε να δείτε τις πράξεις με θέμα:Χρηματικό Ένταλμα (πχ 99206919)");
@@ -212,13 +223,14 @@ public class Api {
 					}
 					break;
 
+				// Επιλογή 10
 				case 10:
 					System.out.println(
 							"Παρακαλώ δώστε τον οργανισμό για τον οποίο θέλετε να δείτε τις πράξεις τύπου Β.1.3 με σχετική σειρά (πχ 99206919)");
 					orgNum = user_input.next();
-					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/search.xml?org=" + orgNum +"&type=Β.1.3&from_date=2018-01-20&to_date=2018-02-20&size=10")
-							.openStream());
-					
+					doc = db.parse(new URL("https://diavgeia.gov.gr/opendata/search.xml?org=" + orgNum
+							+ "&type=Β.1.3&from_date=2018-01-20&to_date=2018-02-20&size=10").openStream());
+
 					orgName = null;
 					doc2 = db.parse(
 							new URL("https://diavgeia.gov.gr/opendata/organizations/" + orgNum + ".xml").openStream());
@@ -227,9 +239,9 @@ public class Api {
 						mynode = myinfo.item(j);
 						orgName = mynode.getTextContent();
 					}
-					
+
 					myinfo = doc.getElementsByTagName("ada");
-					myinfo1= doc.getElementsByTagName("url");
+					myinfo1 = doc.getElementsByTagName("url");
 					mynode = null;
 					System.out.println("Πληροφορίες πράξεων Β.1.3 για τον οργανισμό: " + orgName);
 					for (int j = 0; j < myinfo.getLength(); j++) {
@@ -242,7 +254,7 @@ public class Api {
 						System.out.println(mynode.getTextContent());
 						System.out.println("------------------------------------------");
 					}
-				}
+				} // Τέλος switch
 
 			} catch (MalformedURLException e) {
 
@@ -253,6 +265,6 @@ public class Api {
 				e.printStackTrace();
 
 			}
-		}
-	} // Τέλος του Μενού While
-}
+		} // Τέλος while
+	} // Τέλος main
+} // Τέλος class Api
